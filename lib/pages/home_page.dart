@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last, prefer_final_fields, unused_field, no_leading_underscores_for_local_identifiers, unused_element
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last, prefer_final_fields, unused_field, no_leading_underscores_for_local_identifiers, unused_element, avoid_unnecessary_containers, sized_box_for_whitespace
 
 import "package:flutter/material.dart";
 import '../data.dart';
@@ -161,6 +161,11 @@ class _HomePageState extends State<HomePage> {
           padding: EdgeInsets.fromLTRB(10, 30, 30, 0),
           child: _authorInfoRow(_context, _index),
         ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(
+              20, MediaQuery.of(_context).size.height * 0.05, 30, 0),
+          child: _detailInfoRow(_context, _index),
+        ),
       ],
     );
   }
@@ -234,6 +239,57 @@ class _HomePageState extends State<HomePage> {
             )
           ],
         ),
+      ],
+    );
+  }
+
+  Widget _detailInfoRow(BuildContext _context, int _index) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        FloatingActionButton(
+          shape: CircleBorder(),
+          backgroundColor: Colors.white,
+          onPressed: () {},
+          child: Icon(
+            Icons.play_arrow,
+            color: Colors.redAccent,
+            size: 30,
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Container(
+                width: MediaQuery.of(_context).size.width * 0.50,
+                child: Text(
+                  articles[_index].title,
+                  maxLines: 3,
+                  softWrap: true,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Text(
+                articles[_index].location,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w100,
+                ),
+              ),
+            ],
+          ),
+        )
       ],
     );
   }

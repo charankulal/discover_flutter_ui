@@ -21,7 +21,7 @@ List<Article> articles = [
       true,
       'Osaka Japan',
       50,
-      'Hussain Mustafa'),
+      'Tobey Johnson'),
   Article(
       'Known as the sleepless town for obvious reasons',
       'https://images.wallpaperscraft.com/image/single/night_lights_buildings_59511_1600x900.jpg',
