@@ -1,6 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last, prefer_final_fields, unused_field, no_leading_underscores_for_local_identifiers
 
 import "package:flutter/material.dart";
+import '../data.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -63,9 +64,11 @@ class _HomePageState extends State<HomePage> {
         Padding(
           padding: EdgeInsets.only(
             top: MediaQuery.of(_context).size.height * 0.05,
+            bottom: MediaQuery.of(_context).size.height * 0.05,
           ),
           child: _locationBar(_context),
         ),
+        _articlesList(_context),
       ],
     );
   }
@@ -109,6 +112,39 @@ class _HomePageState extends State<HomePage> {
             );
           },
         ).toList(),
+      ),
+    );
+  }
+
+  Widget _articlesList(BuildContext _context) {
+    return Expanded(
+      child: ListView.builder(
+        itemCount: articles.length,
+        itemBuilder: (context, index) {
+          return Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).size.width * 0.05,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.40,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(articles[index].image),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black38,
+                          spreadRadius: 3,
+                          blurRadius: 20,
+                          offset: Offset(0,6),
+                        ),
+                      ]),
+                ),
+              ));
+        },
       ),
     );
   }
