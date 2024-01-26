@@ -121,30 +121,40 @@ class _HomePageState extends State<HomePage> {
       child: ListView.builder(
         itemCount: articles.length,
         itemBuilder: (context, index) {
-          return Padding(
-            padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).size.width * 0.05,
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(50),
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.40,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(articles[index].image),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black38,
-                        spreadRadius: 3,
-                        blurRadius: 20,
-                        offset: Offset(0, 6),
-                      ),
-                    ]),
-                child: _articleInfoColumn(context, index),
+          return Stack(
+            clipBehavior: Clip.none,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.width * 0.05,
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.40,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(articles[index].image),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black38,
+                            spreadRadius: 3,
+                            blurRadius: 20,
+                            offset: Offset(0, 6),
+                          ),
+                        ]),
+                    child: _articleInfoColumn(context, index),
+                  ),
+                ),
               ),
-            ),
+              Positioned(
+                bottom: 5,
+                left: MediaQuery.of(_context).size.width * 0.10,
+                child: _socialInfoContainer(context, index),
+              ),
+            ],
           );
         },
       ),
@@ -291,6 +301,66 @@ class _HomePageState extends State<HomePage> {
           ),
         )
       ],
+    );
+  }
+
+  Widget _socialInfoContainer(BuildContext _context, int _index) {
+    return Container(
+      height: MediaQuery.of(_context).size.height * 0.08,
+      width: MediaQuery.of(_context).size.width * 0.70,
+      decoration: BoxDecoration(
+        color: Color.fromARGB(255, 211, 209, 209),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Icon(
+                Icons.favorite_border,
+                color: Colors.redAccent,
+              ),
+              Text(
+                articles[_index].likes.toString(),
+                style: TextStyle(
+                  color: Colors.redAccent,
+                ),
+              )
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Icon(
+                Icons.mode_comment,
+                color: Colors.black,
+              ),
+              Text(
+                articles[_index].comments.toString(),
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              )
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Icon(
+                Icons.share,
+                color: Colors.black,
+              ),
+              Text(
+                articles[_index].shares.toString(),
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
