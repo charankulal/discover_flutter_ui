@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last, prefer_final_fields, unused_field, no_leading_underscores_for_local_identifiers
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last, prefer_final_fields, unused_field, no_leading_underscores_for_local_identifiers, unused_element
 
 import "package:flutter/material.dart";
 import '../data.dart';
@@ -122,30 +122,119 @@ class _HomePageState extends State<HomePage> {
         itemCount: articles.length,
         itemBuilder: (context, index) {
           return Padding(
-              padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).size.width * 0.05,
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(50),
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.40,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(articles[index].image),
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).size.width * 0.05,
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.40,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(articles[index].image),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black38,
+                        spreadRadius: 3,
+                        blurRadius: 20,
+                        offset: Offset(0, 6),
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black38,
-                          spreadRadius: 3,
-                          blurRadius: 20,
-                          offset: Offset(0,6),
-                        ),
-                      ]),
-                ),
-              ));
+                    ]),
+                child: _articleInfoColumn(context, index),
+              ),
+            ),
+          );
         },
       ),
+    );
+  }
+
+  Widget _articleInfoColumn(BuildContext _context, int _index) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.fromLTRB(10, 30, 30, 0),
+          child: _authorInfoRow(_context, _index),
+        ),
+      ],
+    );
+  }
+
+  Widget _authorInfoRow(BuildContext _context, int _index) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            Container(
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('../../assets/images/avatar.jpg'),
+                ),
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.white, width: 3),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: 7,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    articles[_index].author,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    "3 hrs ago",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        Column(
+          children: <Widget>[
+            Icon(
+              Icons.favorite,
+              color: Colors.red,
+              size: 23,
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                top: 5,
+              ),
+              child: Icon(
+                Icons.bookmark,
+                color: Colors.white,
+                size: 23,
+              ),
+            )
+          ],
+        ),
+      ],
     );
   }
 }
